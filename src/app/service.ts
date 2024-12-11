@@ -19,11 +19,11 @@ export class CrawlerService {
         const doc = parser.parseFromString(response, 'text/html');
 
         const headers = tags.flatMap((tag) =>
-          Array.from(doc.querySelectorAll(tag)).map((el) => el.textContent?.trim() || '')
+          Array.from(doc.querySelectorAll(tag)).map((el) => el.textContent?.trim() ?? '')  // Nullish coalescing operator
         );
 
         const descriptions = Array.from(doc.querySelectorAll('p'))
-          .map((el) => el.textContent?.trim() || '')
+          .map((el) => el.textContent?.trim() ?? '')  // Nullish coalescing operator
           .filter((text) => text);
 
         return { headers, descriptions };
