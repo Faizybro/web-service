@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,10 @@ export class CrawlerService {
 
         return { headers, descriptions };
       }),
-      catchError((error) => throwError(() => new Error('Failed to fetch content')))
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);  // Log the error for debugging
+        return throwError(() => new Error('Failed to fetch content'));
+      })
     );
   }
 }
