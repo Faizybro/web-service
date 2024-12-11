@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CrawlerService } from './service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -39,11 +40,13 @@ export class AppComponent {
     this.errorMessage = null;
 
     this.crawlerService.fetchContentByTags(['h1', 'h2', 'h3']).subscribe({
-      next: ({ headers, descriptions }) => {
+      next: ({ headers, descriptions }: { headers: string[]; descriptions: string[] }) => {
         this.headers = headers;
         this.descriptions = descriptions;
       },
-      error: (error) => (this.errorMessage = error.message),
+      error: (error: HttpErrorResponse) => {
+        this.errorMessage = error.message || 'An unknown error occurred';
+      },
       complete: () => (this.loading = false),
     });
   }
