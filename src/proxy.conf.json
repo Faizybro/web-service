@@ -1,0 +1,9 @@
+{
+  "/api": {
+    "target": "https://www.bbc.com/news",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": { "^/api": "" },
+    "logLevel": "debug"
+  }
+}
